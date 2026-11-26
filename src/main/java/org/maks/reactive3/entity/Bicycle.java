@@ -1,14 +1,22 @@
 package org.maks.reactive3.entity;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.Table;
+
 import java.math.BigDecimal;
 
+@Table("bicycles")
 public record Bicycle(
-        Long id,
+        @Id Long id,
         String brand,
         String model,
-        String type, // Тип (напр., Гірський, Шосейний)
-        String frameSize,
+        String type,
+        @Column("frame_size") String frameSize,
         BigDecimal price,
-        int stockQuantity
+        @Column("stock_quantity") int stockQuantity
 ) {
+    public Bicycle withId(Long id) {
+        return new Bicycle(id, brand, model, type, frameSize, price, stockQuantity);
+    }
 }
